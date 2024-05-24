@@ -94,4 +94,8 @@
   .nav-bar-menu {
     display: none;
   }
+  .nav-bar-right button {
+    padding: 5px 20px;
+    font-size: 10px;
+  }
 }

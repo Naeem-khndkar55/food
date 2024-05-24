@@ -1,22 +1,26 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { assets } from "../../assets/assets.js";
 
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import { StoreContext } from "../../context/StoreContext.jsx";
 const Navbar = ({ setLogin }) => {
   const [menu, setMenu] = useState("Home");
+  const { getTotal } = useContext(StoreContext);
   return (
     <div className="nav-bar">
-      <img src={assets.logo} className="nav-logo" />
+      <Link to="/">
+        <img src={assets.logo} className="nav-logo" />{" "}
+      </Link>
 
       <ul className="nav-bar-menu">
-        <a
-          href="/"
+        <Link
+          to="/"
           onClick={() => setMenu("Home")}
           className={menu === "Home" ? "active" : ""}
         >
           Home
-        </a>
+        </Link>
         <a
           href="#explore-menu"
           onClick={() => setMenu("Menu")}
@@ -42,8 +46,10 @@ const Navbar = ({ setLogin }) => {
       <div className="nav-bar-right">
         <img src={assets.search_icon} />
         <div className="nav-search-icon">
-          <img src={assets.basket_icon} />
-          <div className="dot"></div>
+          <Link to="/cart">
+            <img src={assets.basket_icon} />
+          </Link>
+          <div className={getTotal() === 0 ? "" : "dot"}></div>
         </div>
         <button
           onClick={() => {
