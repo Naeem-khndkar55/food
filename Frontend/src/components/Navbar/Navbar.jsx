@@ -2,6 +2,7 @@ import { useState } from "react";
 import { assets } from "../../assets/assets.js";
 
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [menu, setMenu] = useState("Home");
   return (
@@ -9,30 +10,34 @@ const Navbar = () => {
       <img src={assets.logo} className="nav-logo" />
 
       <ul className="nav-bar-menu">
-        <li
+        <a
+          href="/"
           onClick={() => setMenu("Home")}
           className={menu === "Home" ? "active" : ""}
         >
           Home
-        </li>
-        <li
+        </a>
+        <a
+          href="#explore-menu"
           onClick={() => setMenu("Menu")}
           className={menu === "Menu" ? "active" : ""}
         >
           Menu
-        </li>
-        <li
+        </a>
+        <a
+          href="#mobile-app"
           onClick={() => setMenu("Mobile-App")}
           className={menu === "Mobile-App" ? "active" : ""}
         >
           Mobile App
-        </li>
-        <li
+        </a>
+        <a
+          href="#footer"
           onClick={() => setMenu("Contact")}
           className={menu === "Contact" ? "active" : ""}
         >
           Contact Us
-        </li>
+        </a>
       </ul>
       <div className="nav-bar-right">
         <img src={assets.search_icon} />

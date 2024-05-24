@@ -51,3 +51,47 @@
   top: -8px;
   right: -8px;
 }
+@media (max-width: 1250px) {
+  .nav-bar .nav-logo {
+    width: 140px;
+  }
+  .nav-bar-menu {
+    gap: 20px;
+    font-size: 17px;
+  }
+  .nav-bar-right {
+    gap: 30px;
+  }
+  .nav-bar-right img {
+    width: 22px;
+  }
+  .nav-bar-right button {
+    padding: 8px 25px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-bar .nav-logo {
+    width: 120px;
+  }
+  .nav-bar-menu {
+    gap: 15px;
+    font-size: 16px;
+  }
+  .nav-bar-right {
+    gap: 20px;
+  }
+  .nav-bar-right img {
+    width: 20px;
+  }
+  .nav-bar-right button {
+    padding: 7px 20px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 750px) {
+  .nav-bar-menu {
+    display: none;
+  }
+}

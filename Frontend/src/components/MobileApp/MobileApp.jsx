@@ -2,7 +2,7 @@ import "./MobileApp.css";
 import { assets } from "../../assets/assets";
 const MobileApp = () => {
   return (
-    <div className="app-download">
+    <div className="app-download" id="mobile-app">
       <p>
         Download Mobile app for better experience <br /> Khabo. App
       </p>
