@@ -3,7 +3,7 @@ import { assets } from "../../assets/assets.js";
 
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-const Navbar = () => {
+const Navbar = ({ setLogin }) => {
   const [menu, setMenu] = useState("Home");
   return (
     <div className="nav-bar">
@@ -45,7 +45,13 @@ const Navbar = () => {
           <img src={assets.basket_icon} />
           <div className="dot"></div>
         </div>
-        <button>Sign In</button>
+        <button
+          onClick={() => {
+            setLogin(true);
+          }}
+        >
+          Sign In
+        </button>
       </div>
     </div>
   );
