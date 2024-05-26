@@ -13,6 +13,7 @@ connectDB();
 //api
 
 app.use("/api/food", Foodrouter);
+app.use("/image", express.static("./uploads"));
 
 app.listen(port, () => {
   console.log(`app is runnig to the port ${port}`);
