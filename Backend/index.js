@@ -1,16 +1,19 @@
 const express = require("express");
 const cors = require("cors");
-
+const connectDB = require("./src/config/db.js");
+const Foodrouter = require("./src/routes/FoodRoute.js");
+require("dotenv").config();
 const app = express();
-const PORT = "3003";
+const port = process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
+connectDB();
 
-app.get("/auth", (req, res) => {
-  res.send("api is working");
-});
+//api
 
-app.listen(PORT, () => {
-  console.log(`app is runnig to the port ${PORT}`);
+app.use("/api/food", Foodrouter);
+
+app.listen(port, () => {
+  console.log(`app is runnig to the port ${port}`);
 });
