@@ -3,8 +3,7 @@ import { assets } from "../../assets/assets";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-const AddFood = () => {
-  const url = "http://localhost:3003";
+const AddFood = ({ url }) => {
   const [image, setImage] = useState(false);
   const [data, SetData] = useState({
     name: "",
