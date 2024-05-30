@@ -5,26 +5,43 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvide = (props) => {
   const [cartItem, setCartItem] = useState({});
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   const url = "http://localhost:3003";
   const [food_list, setFoodList] = useState([]);
-  const addToCart = (itemId) => {
+
+  const addToCart = async (itemId) => {
     setCartItem((prev) => ({
       ...prev,
       [itemId]: prev[itemId] ? prev[itemId] + 1 : 1,
     }));
+
+    if (token) {
+      await axios.post(
+        url + "/api/cart/addtocart",
+        { itemId },
+        { headers: { token } }
+      );
+    }
   };
 
-  const removeFromCart = (itemId) => {
+  const removeFromCart = async (itemId) => {
     setCartItem((prev) => {
       if (prev[itemId] > 1) {
         return { ...prev, [itemId]: prev[itemId] - 1 };
       } else {
-        const { [itemId]: _, ...rest } = prev; // Remove the item from the cart
+        const { [itemId]: _, ...rest } = prev;
         return rest;
       }
     });
+
+    if (token) {
+      await axios.post(
+        url + "/api/cart/removecart",
+        { itemId },
+        { headers: { token } }
+      );
+    }
   };
 
   const getTotal = () => {
@@ -46,15 +63,28 @@ const StoreContextProvide = (props) => {
     const response = await axios.get(url + "/api/food/foodlist");
     setFoodList(response.data.data);
   };
+
+  const loadCartData = async () => {
+    if (token) {
+      const response = await axios.post(
+        url + "/api/cart/getcart",
+        {},
+        { headers: { token } }
+      );
+      setCartItem(response.data.cartData);
+    }
+  };
+
   useEffect(() => {
     const loadData = async () => {
       await fetchFoodList();
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
+      if (token) {
+        await loadCartData();
       }
     };
     loadData();
-  }, []);
+  }, [token]);
+
   const contextValue = {
     food_list,
     cartItem,
