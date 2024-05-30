@@ -1,11 +1,45 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import "./Login.css";
 import { assets } from "../../assets/assets";
+
+import axios from "axios";
+import { StoreContext } from "../../context/StoreContext.jsx";
 const Login = ({ setLogin }) => {
+  const { url, setToken } = useContext(StoreContext);
+
   const [current, setCurrent] = useState("Sign Up");
+
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const handleLogin = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData((data) => ({ ...data, [name]: value }));
+  };
+  const onLogin = async (e) => {
+    e.preventDefault();
+    let newUrl = url;
+    if (current === "Login") {
+      newUrl += "/api/user/login";
+    } else {
+      newUrl += "/api/user/register";
+    }
+    const response = await axios.post(newUrl, data);
+    if (response.data.success) {
+      setToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      setLogin(false);
+    } else {
+      alert(response.data.message);
+    }
+  };
+
   return (
     <div className="login">
-      <from className="login-container">
+      <form onSubmit={onLogin} className="login-container">
         <div className="title">
           <h2>{current}</h2>
           <img
@@ -19,13 +53,36 @@ const Login = ({ setLogin }) => {
           {current === "Login" ? (
             <></>
           ) : (
-            <input type="text" placeholder="your name" required />
+            <input
+              name="name"
+              onChange={handleLogin}
+              value={data.name}
+              type="text"
+              placeholder="your name"
+              required
+            />
           )}
 
-          <input type="email" placeholder="your email" required />
-          <input type="password" placeholder="password" required />
+          <input
+            name="email"
+            onChange={handleLogin}
+            value={data.email}
+            type="email"
+            placeholder="your email"
+            required
+          />
+          <input
+            name="password"
+            onChange={handleLogin}
+            value={data.password}
+            type="password"
+            placeholder="password"
+            required
+          />
         </div>
-        <button>{current === "Sign Up" ? "create account" : "Login"}</button>
+        <button type="submit">
+          {current === "Sign Up" ? "create account" : "Login"}
+        </button>
 
         <div className="login-condition">
           <input type="checkbox" required />
@@ -54,7 +111,7 @@ const Login = ({ setLogin }) => {
             </span>
           </p>
         )}
-      </from>
+      </form>
     </div>
   );
 };
