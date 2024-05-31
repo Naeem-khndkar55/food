@@ -97,4 +97,39 @@ const userOrders = async (req, res) => {
   }
 };
 
-module.exports = { placeOrder, verifyOrder, userOrders };
+const orderList = async (req, res) => {
+  try {
+    const orders = await OrderModel.find({});
+    res.json({ success: true, data: orders });
+  } catch (error) {
+    console.error("Error placing order:", error);
+    res.json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+};
+
+const updateStatus = async (req, res) => {
+  try {
+    await OrderModel.findByIdAndUpdate(req.body.orderId, {
+      status: req.body.status,
+    });
+    res.json({ success: true, message: "status Updated" });
+  } catch (error) {
+    console.error("Error placing order:", error);
+    res.json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+};
+module.exports = {
+  placeOrder,
+  verifyOrder,
+  userOrders,
+  orderList,
+  updateStatus,
+};
