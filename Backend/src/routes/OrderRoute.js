@@ -5,5 +5,5 @@ const midleware = require("../middleware/auth.js");
 const orderRouter = express.Router();
 
 orderRouter.post("/placeorder", midleware, orderController.placeOrder);
-
+orderRouter.post("/verifyorder", orderController.verifyOrder);
 module.exports = orderRouter;
