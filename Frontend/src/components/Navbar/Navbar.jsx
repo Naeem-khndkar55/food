@@ -69,7 +69,11 @@ const Navbar = ({ setLogin }) => {
           <div className="navbar-profile">
             <img src={assets.profile_icon} />
             <ul className="drop-down">
-              <li>
+              <li
+                onClick={() => {
+                  navigate("/myorders");
+                }}
+              >
                 <img src={assets.bag_icon} /> <p>Orders</p>
               </li>
               <hr />
