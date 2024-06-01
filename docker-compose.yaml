@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  Backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./Backend:/usr/src/app
+    environment:
+      - PORT = '3003'
+      - MONGO_URI = mongodb+srv://naeemkhandakar5:naeem123@cluster0.vyzwrww.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - JWT_SECRET ="naeem1234"
+      - STRIPE_KEY = "sk_test_51OAvSfDKkD1RYfdAyrTPeKXwjHounndxbWT6UrhEq5jjb8AOsf1SJHECO8ejTPz25nN9fBvwK4nVp6aL2Fx0SkJa002Tkr4BA3"
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Frontend:/usr/src/app
